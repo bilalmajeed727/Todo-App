@@ -2,32 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
+/* globals.css */
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #D1D5DB; /* Tailwind's gray-300 color */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* globals.css or any global stylesheet */
+:root {
+  --primary-gradient: linear-gradient(271deg, #80D8F8 0.33%, #6DBEEB 4.26%, #5097D9 11.14%, #3976C9 18.02%, #275DBE 25.89%, #1A4BB5 33.75%, #1241B0 41.61%, #103EAF 51.44%, #143FB1 59.3%, #2244BA 68.15%, #394CC8 77%, #5958DB 86.82%, #8266F4 97.64%, #8969F8 98.62%);
 }
+
+.text-primary-color {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
