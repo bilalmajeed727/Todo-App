@@ -4,7 +4,6 @@ import { MdDelete } from "react-icons/md";
 import { ImCheckboxChecked } from "react-icons/im";
 import { ImCheckboxUnchecked } from "react-icons/im";
 
-
 const Todo = () => {
   // States
   const [activeTab, setActiveTab] = useState("All");
@@ -34,7 +33,7 @@ const Todo = () => {
     {
       user: "Bilal Majeed",
       task: "Go to office",
-      status: "Deleted",
+      status: "Active",
       checked: false,
     },
   ]);
@@ -42,7 +41,6 @@ const Todo = () => {
   // Functions
   // Add Task
   const handleSubmit = (e: React.MouseEvent): void => {
-
     if (newUser === "" || newTask === "") {
       return;
     } else {
@@ -52,7 +50,7 @@ const Todo = () => {
         status: "Active", // Default status can be changed as needed
         checked: false, // Default to unchecked
       };
-      setTasks([newTaskObject,...tasks,]);
+      setTasks([newTaskObject, ...tasks]);
       setNewUser("");
       setNewTask("");
     }
@@ -76,12 +74,20 @@ const Todo = () => {
   const handleDelete = (index: number): void => {
     const updatedTasks = tasks.map((task, i) => {
       if (i === index) {
-        return { ...task, status: 'Deleted' };
+        return { ...task, status: "Deleted" };
       }
       return task;
     });
 
     setTasks(updatedTasks);
+  };
+
+  // Task counter
+  const getCountByStatus = (status) => {
+    if (status === "All") {
+      return tasks.length;
+    }
+    return tasks.filter((task) => task.status === status).length;
   };
 
   return (
@@ -111,7 +117,7 @@ const Todo = () => {
         </button>
       </div>
       <div className="flex justify-between items-center mt-10">
-        <h1 className="font-bold">All todos ({tasks.length})</h1>
+        <h1 className="font-bold">All todos</h1>
         <div className="flex justify-between items-center w-[376px] h-[50px] bg-white rounded-full py-2 px-5 text-[12px] font-medium">
           <h1
             className={`cursor-pointer ${
@@ -121,7 +127,7 @@ const Todo = () => {
             }`}
             onClick={() => setActiveTab("All")}
           >
-            All
+           All ({getCountByStatus("All")})
           </h1>
           <h1
             className={`cursor-pointer ${
@@ -131,7 +137,7 @@ const Todo = () => {
             }`}
             onClick={() => setActiveTab("Completed")}
           >
-            Completed
+            Completed ({getCountByStatus("Completed")})
           </h1>
           <h1
             className={`cursor-pointer ${
@@ -141,7 +147,7 @@ const Todo = () => {
             }`}
             onClick={() => setActiveTab("Active")}
           >
-            Active
+            Active ({getCountByStatus("Active")})
           </h1>
           <h1
             className={`cursor-pointer ${
@@ -151,11 +157,11 @@ const Todo = () => {
             }`}
             onClick={() => setActiveTab("Deleted")}
           >
-            Deleted
+            Deleted ({getCountByStatus("Deleted")})
           </h1>
         </div>
       </div>
-      <div className="bg-white px-2 py-2 mt-5 rounded-md flex justify-between flex-col mb-10 ">
+      <div className="bg-white px-2 py-2 mt-5 rounded-md flex justify-between flex-col mb-10">
         {tasks
           .filter((task) => activeTab === "All" || task.status === activeTab)
           .map((task, index) => (
@@ -165,9 +171,9 @@ const Todo = () => {
                 task.status === "Deleted" ? "bg-red-200" : ""
               } border-2`}
             >
-              <div className="flex gap-5">
-                <p className="flex items-start font-semibold">{task.user}</p>
-                <p className="">{task.task}</p>
+              <div className="flex gap-5 items-center w-full">
+                <p className="font-semibold w-1/4 ">{task.user}</p>
+                <p className="flex-1 ">{task.task}</p>
               </div>
 
               <div className="flex items-center gap-5">
