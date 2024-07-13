@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { ImCheckboxChecked } from "react-icons/im";
 import { ImCheckboxUnchecked } from "react-icons/im";
-import { ToastContainer, toast } from 'react-toastify';
 
 
 const Todo = () => {
@@ -42,7 +41,7 @@ const Todo = () => {
 
   // Functions
   // Add Task
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: React.MouseEvent): void => {
 
     if (newUser === "" || newTask === "") {
       return;
@@ -53,7 +52,7 @@ const Todo = () => {
         status: "Active", // Default status can be changed as needed
         checked: false, // Default to unchecked
       };
-      setTasks([...tasks, newTaskObject]);
+      setTasks([newTaskObject,...tasks,]);
       setNewUser("");
       setNewTask("");
     }
@@ -75,7 +74,13 @@ const Todo = () => {
 
   // Delete
   const handleDelete = (index: number): void => {
-    const updatedTasks = tasks.filter((_, i) => i !== index);
+    const updatedTasks = tasks.map((task, i) => {
+      if (i === index) {
+        return { ...task, status: 'Deleted' };
+      }
+      return task;
+    });
+
     setTasks(updatedTasks);
   };
 
